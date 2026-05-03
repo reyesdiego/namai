@@ -14,5 +14,5 @@ COPY . .
 # Expose port (Easypanel expects port 80 by default)
 EXPOSE 80
 
-# Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+# Command to run the application (with proxy headers for Traefik/Easypanel)
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--proxy-headers", "--forwarded-allow-ips", "*"]
