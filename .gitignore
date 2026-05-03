@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Backend (Python)
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/namai.db
+backend/.env
+backend/uploads/
+
+# Frontend (Node.js) - Assuming frontend/.gitignore handles its own, but good to have here too
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local

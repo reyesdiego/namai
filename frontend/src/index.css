@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-red: #dc1c2e;
+  --color-brand-red-hover: #b91524;
+  --color-brand-blue: #003da5;
+  --color-brand-blue-hover: #002870;
+  
+  --color-background-dark: #0f172a;
+  --color-paper-dark: #1e293b;
+  --color-paper-darker: #0b1120;
+  
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+}
+
+@layer base {
+  :root {
+    background-color: var(--color-background-dark);
+    color: var(--color-text-primary);
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Custom utilities for glassmorphism */
+@layer utilities {
+  .glass {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Animations */
+@keyframes slide-infinite {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.animate-slide-infinite {
+  animation: slide-infinite 30s linear infinite;
+}
