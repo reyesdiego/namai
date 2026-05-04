@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 import { Home, Users, Settings, LogOut, Award, BarChart2, ChevronLeft, ChevronRight } from 'lucide-react';
 import classNames from 'classnames';
+import { api } from '../utils/api';
 
 export default function Layout() {
   const { user, logout } = useAuth();
@@ -71,7 +72,7 @@ export default function Layout() {
             isCollapsed ? "justify-center" : "px-4"
           )}>
             {user?.photo_url ? (
-              <img src={`http://127.0.0.1:8000${user.photo_url}`} alt="avatar" className="w-10 h-10 rounded-full object-cover border border-white/20 shrink-0" />
+              <img src={`${api.defaults.baseURL}${user.photo_url}`} alt="avatar" className="w-10 h-10 rounded-full object-cover border border-white/20 shrink-0" />
             ) : (
               <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center font-bold shrink-0">
                 {user?.name?.charAt(0)}

@@ -188,7 +188,7 @@ export default function AgentsCRUD() {
                   <tr key={agent.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                     <td className="p-3">
                       {agent.photo_url ? (
-                        <img src={`http://127.0.0.1:8000${agent.photo_url}`} alt="Avatar" className="w-10 h-10 rounded-full object-cover" />
+                        <img src={`${api.defaults.baseURL}${agent.photo_url}`} alt="Avatar" className="w-10 h-10 rounded-full object-cover" />
                       ) : (
                         <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center font-bold">{agent.name.charAt(0)}</div>
                       )}
