@@ -64,3 +64,53 @@ def delete_agent(user_id: int, db: Session = Depends(database.get_db), current_u
     user.is_active = False # Soft delete
     db.commit()
     return
+
+@router.patch("/{user_id}", response_model=schemas.UserResponse)
+def update_agent(
+    user_id: int,
+    email: str = Form(None),
+    name: str = Form(None),
+    password: str = Form(None),
+    begin_date: str = Form(None),
+    end_date: str = Form(None),
+    photo: UploadFile = File(None),
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_admin_user)
+):
+    user = db.query(models.User).filter(models.User.id == user_id, models.User.role == "agent").first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Agent not found")
+    
+    if email:
+        db_user = db.query(models.User).filter(models.User.email == email, models.User.id != user_id).first()
+        if db_user:
+            raise HTTPException(status_code=400, detail="Email already registered")
+        user.email = email
+        
+    if name:
+        user.name = name
+        
+    if password:
+        user.hashed_password = auth.get_password_hash(password)
+        
+    if begin_date is not None:
+        if begin_date == 'null' or begin_date == '':
+            user.begin_date = None
+        else:
+            user.begin_date = datetime.fromisoformat(begin_date.replace("Z", "+00:00"))
+            
+    if end_date is not None:
+        if end_date == 'null' or end_date == '':
+            user.end_date = None
+        else:
+            user.end_date = datetime.fromisoformat(end_date.replace("Z", "+00:00"))
+            
+    if photo:
+        file_location = f"uploads/{photo.filename}"
+        with open(file_location, "wb+") as file_object:
+            file_object.write(photo.file.read())
+        user.photo_url = f"/{file_location}"
+        
+    db.commit()
+    db.refresh(user)
+    return user
