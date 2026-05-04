@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, LabelList, Tooltip } from 'recharts';
 
 interface RankingChartProps {
@@ -83,7 +83,7 @@ export function RankingChart({ data, variant = 'dashboard' }: RankingChartProps)
               barSize={barSize}
               animationDuration={2000}
             >
-              {processedData.map((entry: any, index: number) => (
+              {processedData.map((_entry: any, index: number) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={index < 3 ? 'var(--color-brand-red)' : 'var(--color-brand-blue)'}

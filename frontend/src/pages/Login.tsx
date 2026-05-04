@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 import { api } from '../utils/api';
-import { jwtDecode } from "jwt-decode";
 import { Lock, User } from 'lucide-react';
 
 export default function Login() {
@@ -23,16 +22,16 @@ export default function Login() {
       const { data } = await api.post('/token', formParams, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
-      
+
       const token = data.access_token;
-      
+
       // We set the token temporarily to trigger the user fetch,
       // Or we can manually fetch the user here:
       localStorage.setItem('token', token);
       const userRes = await api.get('/users/me', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      
+
       login(token, userRes.data);
       navigate('/');
     } catch (err: any) {
@@ -45,7 +44,7 @@ export default function Login() {
       {/* Decorative Blur Blobs */}
       <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-[var(--color-brand-blue)] rounded-full mix-blend-multiply filter blur-[100px] opacity-20"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-[var(--color-brand-red)] rounded-full mix-blend-multiply filter blur-[100px] opacity-20"></div>
-      
+
       <div className="w-full max-w-md p-8 rounded-2xl glass z-10 shadow-2xl relative">
         <div className="mb-8 text-center">
           <div className="w-16 h-16 mx-auto bg-[var(--color-brand-red)] rounded-2xl rotate-45 flex items-center justify-center mb-6 shadow-lg shadow-red-500/30">
@@ -78,7 +77,7 @@ export default function Login() {
               />
             </div>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-300">Contraseña</label>
             <div className="relative">

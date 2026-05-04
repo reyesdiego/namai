@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 import { Home, Users, Settings, LogOut, Award, BarChart2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -26,7 +26,7 @@ export default function Layout() {
         "flex flex-col border-r border-white/10 glass z-10 transition-all duration-300 relative",
         isCollapsed ? "w-20" : "w-64"
       )}>
-        <button 
+        <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="absolute -right-3 top-6 bg-[var(--color-brand-blue)] rounded-full p-1 border-2 border-[var(--color-background-dark)] z-20 hover:scale-110 transition-transform hidden sm:block shadow-lg"
           title={isCollapsed ? "Expandir" : "Colapsar"}
@@ -40,20 +40,20 @@ export default function Layout() {
           </div>
           {!isCollapsed && <h1 className="text-xl font-bold tracking-wider truncate">NAMAI</h1>}
         </div>
-        
+
         <nav className="flex-1 px-4 space-y-2 mt-4">
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
             const Icon = item.icon;
             return (
-              <Link 
-                key={item.path} 
+              <Link
+                key={item.path}
                 to={item.path}
                 title={isCollapsed ? item.label : undefined}
                 className={classNames(
                   'flex items-center gap-3 py-3 rounded-xl transition-all duration-200 group',
-                  isActive 
-                    ? 'bg-[var(--color-brand-blue)] text-white shadow-lg shadow-blue-500/20' 
+                  isActive
+                    ? 'bg-[var(--color-brand-blue)] text-white shadow-lg shadow-blue-500/20'
                     : 'text-gray-400 hover:bg-white/5 hover:text-white',
                   isCollapsed ? "justify-center px-0" : "px-4"
                 )}
@@ -84,8 +84,8 @@ export default function Layout() {
               </div>
             )}
           </div>
-          
-          <button 
+
+          <button
             onClick={logout}
             title={isCollapsed ? "Cerrar Sesión" : undefined}
             className={classNames(

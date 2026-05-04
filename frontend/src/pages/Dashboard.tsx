@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../utils/api';
 import { useAuth } from '../store/AuthContext';
@@ -93,7 +93,7 @@ export default function Dashboard() {
                 paddingAngle={5}
                 dataKey="value"
               >
-                {dashboardData?.activity_distribution?.map((entry: any, index: number) => (
+                {dashboardData?.activity_distribution?.map((_entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
