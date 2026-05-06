@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
-import { Home, Users, Settings, LogOut, Award, BarChart2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, Users, Settings, LogOut, Award, BarChart2, ChevronLeft, ChevronRight, User } from 'lucide-react';
 import classNames from 'classnames';
 import { api } from '../utils/api';
 
@@ -67,10 +67,10 @@ export default function Layout() {
         </nav>
 
         <div className="p-4 mt-auto border-t border-white/10">
-          <div className={classNames(
-            "flex items-center gap-3 mb-4",
-            isCollapsed ? "justify-center" : "px-4"
-          )}>
+          <Link to="/profile" className={classNames(
+            "flex items-center gap-3 mb-4 hover:bg-white/5 p-2 rounded-xl transition-colors",
+            isCollapsed ? "justify-center" : "px-2"
+          )} title="Mi Perfil">
             {user?.photo_url ? (
               <img src={`${api.defaults.baseURL}${user.photo_url}`} alt="avatar" className="w-10 h-10 rounded-full object-cover border border-white/20 shrink-0" />
             ) : (
@@ -84,7 +84,7 @@ export default function Layout() {
                 <p className="text-xs text-[var(--color-brand-red)] font-medium capitalize">{user?.role}</p>
               </div>
             )}
-          </div>
+          </Link>
 
           <button
             onClick={logout}

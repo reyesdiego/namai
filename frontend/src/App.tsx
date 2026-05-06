@@ -11,6 +11,7 @@ import BigBoard from './pages/BigBoard';
 import AgentsCRUD from './pages/AgentsCRUD';
 import PointsConfig from './pages/PointsConfig';
 import AssignPoints from './pages/AssignPoints';
+import Profile from './pages/Profile';
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ function AppRoutes() {
         <Route path="/agents" element={<ProtectedRoute allowedRoles={['admin']}><AgentsCRUD /></ProtectedRoute>} />
         <Route path="/points" element={<ProtectedRoute allowedRoles={['admin']}><PointsConfig /></ProtectedRoute>} />
         <Route path="/assign" element={<ProtectedRoute allowedRoles={['admin']}><AssignPoints /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       </Route>
     </Routes>
   );

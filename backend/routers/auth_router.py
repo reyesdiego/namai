@@ -24,3 +24,14 @@ def login_for_access_token(db: Session = Depends(database.get_db), form_data: OA
 @router.get("/users/me", response_model=schemas.UserResponse)
 def read_users_me(current_user: models.User = Depends(auth.get_current_active_user)):
     return current_user
+
+@router.patch("/users/me", response_model=schemas.UserResponse)
+def update_user_me(user_update: schemas.UserUpdate, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_active_user)):
+    if user_update.name is not None:
+        current_user.name = user_update.name
+    if user_update.password is not None and user_update.password.strip() != "":
+        current_user.hashed_password = auth.get_password_hash(user_update.password)
+    
+    db.commit()
+    db.refresh(current_user)
+    return current_user
