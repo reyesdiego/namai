@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
-import { Home, Users, Settings, LogOut, Award, BarChart2, ChevronLeft, ChevronRight, User } from 'lucide-react';
+import { Home, Users, Settings, LogOut, Award, BarChart2, ChevronLeft, ChevronRight } from 'lucide-react';
 import classNames from 'classnames';
 import { api } from '../utils/api';
 
