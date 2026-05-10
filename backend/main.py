@@ -5,8 +5,7 @@ from fastapi.staticfiles import StaticFiles
 import database, models, auth
 from routers import auth_router, agents_router, points_router, stats_router
 
-# Create tables
-models.Base.metadata.create_all(bind=database.engine)
+# create_all removed. Alembic handles migrations.
 
 app = FastAPI(title="Namai Real Estate API", description="Puntos y Gestión de Agentes")
 
