@@ -52,10 +52,10 @@ export default function AssignPoints() {
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
-      <div className="glass p-8 rounded-2xl border border-white/5 shadow-2xl relative overflow-hidden">
+      <div className="glass p-6 sm:p-8 rounded-2xl border border-white/5 shadow-2xl relative overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-[30vw] h-[30vw] bg-[var(--color-brand-red)] rounded-full mix-blend-multiply filter blur-[100px] opacity-10 pointer-events-none"></div>
         
-        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-2">
           <Award className="text-[var(--color-brand-red)]" size={28} />
           Asignar Puntos a Agente
         </h2>

@@ -47,11 +47,11 @@ export default function Profile() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <div className="glass p-8 rounded-3xl border border-white/5 relative overflow-hidden">
+      <div className="glass p-6 sm:p-8 rounded-3xl border border-white/5 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand-blue)] rounded-full mix-blend-multiply filter blur-[80px] opacity-10"></div>
         
-        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-8 flex items-center gap-3">
           <div className="p-3 bg-[var(--color-brand-blue)]/20 rounded-xl">
             <User className="text-[var(--color-brand-blue)]" size={24} />
           </div>

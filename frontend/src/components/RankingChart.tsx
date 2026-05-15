@@ -10,8 +10,12 @@ export function RankingChart({ data, variant = 'dashboard' }: RankingChartProps)
   const isBigBoard = variant === 'bigboard';
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
   useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', handleResize);
+    
     const observer = new ResizeObserver((entries) => {
       if (entries[0]) {
         setContainerHeight(entries[0].contentRect.height);
@@ -22,7 +26,10 @@ export function RankingChart({ data, variant = 'dashboard' }: RankingChartProps)
       observer.observe(containerRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const processedData = data.map((agent: any, index: number) => {
@@ -38,12 +45,12 @@ export function RankingChart({ data, variant = 'dashboard' }: RankingChartProps)
     };
   });
 
-  const fontYAxis = isBigBoard ? 24 : 14;
-  const fontLabel = 14; // Forced to 14 for testing insideRight on BigBoard
-  const widthYAxis = isBigBoard ? 300 : 150;
-  const marginRight = isBigBoard ? 200 : 80;
-  const barSize = isBigBoard ? 40 : 25;
-  const rowHeight = isBigBoard ? 80 : 50;
+  const fontYAxis = isBigBoard ? 24 : (isMobile ? 11 : 14);
+  const fontLabel = isMobile ? 11 : 14; 
+  const widthYAxis = isBigBoard ? 250 : (isMobile ? 100 : 130);
+  const marginRight = isBigBoard ? 100 : (isMobile ? 20 : 40);
+  const barSize = isBigBoard ? 40 : (isMobile ? 20 : 25);
+  const rowHeight = isBigBoard ? 80 : (isMobile ? 40 : 50);
 
   const calculatedHeight = Math.max(containerHeight, processedData.length * rowHeight);
   const isOverflowing = containerHeight > 0 && calculatedHeight > containerHeight;

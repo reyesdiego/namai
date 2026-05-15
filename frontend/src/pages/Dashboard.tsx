@@ -72,7 +72,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Agents Chart */}
-        <div className="glass p-6 rounded-2xl border border-white/5 h-[400px] flex flex-col">
+        <div className="glass p-6 rounded-2xl border border-white/5 h-[350px] md:h-[400px] flex flex-col">
           <h3 className="text-lg font-semibold mb-4 text-white">Top Agentes</h3>
           <div className="flex-1 min-h-0 -ml-4">
             <RankingChart data={rankingData || []} variant="dashboard" />
@@ -80,7 +80,7 @@ export default function Dashboard() {
         </div>
 
         {/* Distribution Chart */}
-        <div className="glass p-6 rounded-2xl border border-white/5 h-[400px]">
+        <div className="glass p-6 rounded-2xl border border-white/5 h-[350px] md:h-[400px]">
           <h3 className="text-lg font-semibold mb-4 text-white">Distribución de Puntos</h3>
           <ResponsiveContainer width="100%" height="85%">
             <PieChart>

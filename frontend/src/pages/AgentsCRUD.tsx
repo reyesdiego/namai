@@ -116,8 +116,8 @@ export default function AgentsCRUD() {
 
   return (
     <div className="space-y-6">
-      <div className="glass p-6 rounded-2xl border border-white/5">
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center justify-between">
+      <div className="glass p-4 sm:p-6 rounded-2xl border border-white/5">
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <UserPlus className="text-[var(--color-brand-blue)]" />
             {editingAgentId ? 'Editar Agente' : 'Registrar Nuevo Agente'}
@@ -169,11 +169,11 @@ export default function AgentsCRUD() {
         </form>
       </div>
 
-      <div className="glass p-6 rounded-2xl border border-white/5">
-        <h2 className="text-xl font-bold text-white mb-6">Lista de Agentes Activos</h2>
+      <div className="glass p-4 sm:p-6 rounded-2xl border border-white/5">
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-6">Lista de Agentes Activos</h2>
         {isLoading ? <p>Cargando...</p> : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse text-sm sm:text-base">
               <thead>
                 <tr className="border-b border-white/10 text-gray-400">
                   <th className="p-3 font-medium">Foto</th>

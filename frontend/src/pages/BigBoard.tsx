@@ -42,6 +42,8 @@ export default function BigBoard() {
       <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-[var(--color-brand-red)] rounded-full mix-blend-multiply filter blur-[150px] opacity-10"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-[var(--color-brand-blue)] rounded-full mix-blend-multiply filter blur-[150px] opacity-10"></div>
 
+
+
       {/* Header */}
       <header className="p-8 pb-4 flex justify-between items-end  z-10">
         <div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
-import { Home, Users, Settings, LogOut, Award, BarChart2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, Users, Settings, LogOut, Award, BarChart2, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
 import classNames from 'classnames';
 import { api } from '../utils/api';
 
@@ -9,6 +9,7 @@ export default function Layout() {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const menuItems = [
     { path: '/', icon: Home, label: 'Dashboard' },
@@ -17,16 +18,33 @@ export default function Layout() {
       { path: '/points', icon: Settings, label: 'Configuración Puntos' },
       { path: '/assign', icon: Award, label: 'Asignar Puntos' },
     ] : []),
-    { path: '/bigboard', icon: BarChart2, label: 'Big Board (TV)' },
+    { path: '/bigboard', icon: BarChart2, label: 'Big Board (TV)', hideOnMobile: true },
   ];
 
   return (
     <div className="flex h-screen bg-[var(--color-background-dark)] text-white overflow-hidden">
+      {/* Mobile Menu Backdrop */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside className={classNames(
-        "flex flex-col border-r border-white/10 glass z-10 transition-all duration-300 relative",
-        isCollapsed ? "w-20" : "w-64"
+        "flex flex-col border-r border-white/10 glass z-40 transition-all duration-300 shadow-2xl md:shadow-none",
+        "fixed inset-y-0 left-0 h-full md:relative md:translate-x-0",
+        isMobileMenuOpen ? "translate-x-0 w-64" : "-translate-x-full",
+        isCollapsed ? "md:w-20" : "md:w-64"
       )}>
+        {/* Mobile close button */}
+        <button 
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="absolute top-6 right-4 md:hidden text-gray-400 hover:text-white"
+        >
+          <X size={20} />
+        </button>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="absolute -right-3 top-6 bg-[var(--color-brand-blue)] rounded-full p-1 border-2 border-[var(--color-background-dark)] z-20 hover:scale-110 transition-transform hidden sm:block shadow-lg"
@@ -50,13 +68,15 @@ export default function Layout() {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
                 title={isCollapsed ? item.label : undefined}
                 className={classNames(
-                  'flex items-center gap-3 py-3 rounded-xl transition-all duration-200 group',
+                  'items-center gap-3 py-3 rounded-xl transition-all duration-200 group',
                   isActive
                     ? 'bg-[var(--color-brand-blue)] text-white shadow-lg shadow-blue-500/20'
                     : 'text-gray-400 hover:bg-white/5 hover:text-white',
-                  isCollapsed ? "justify-center px-0" : "px-4"
+                  isCollapsed ? "justify-center px-0" : "px-4",
+                  item.hideOnMobile ? "hidden md:flex" : "flex"
                 )}
               >
                 <Icon size={20} className={isActive && !isCollapsed ? '' : 'group-hover:scale-110 transition-transform shrink-0'} />
@@ -101,13 +121,19 @@ export default function Layout() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col relative overflow-y-auto">
-        <header className="h-16 border-b border-white/5 glass flex items-center px-8 sticky top-0 z-20">
+      <main className="flex-1 flex flex-col relative overflow-y-auto w-full">
+        <header className="h-16 border-b border-white/5 glass flex items-center px-4 sm:px-8 sticky top-0 z-20 gap-4">
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="md:hidden text-gray-300 hover:text-white transition-colors"
+          >
+            <Menu size={24} />
+          </button>
           <h2 className="text-lg font-semibold text-gray-200">
             {menuItems.find(m => m.path === location.pathname)?.label || 'Panel'}
           </h2>
         </header>
-        <div className="p-8 pb-20">
+        <div className="p-4 sm:p-8 pb-20 w-full overflow-x-hidden">
           <Outlet />
         </div>
       </main>

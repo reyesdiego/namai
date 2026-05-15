@@ -61,8 +61,8 @@ export default function PointsConfig() {
 
   return (
     <div className="space-y-6">
-      <div className="glass p-6 rounded-2xl border border-white/5">
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+      <div className="glass p-4 sm:p-6 rounded-2xl border border-white/5">
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-6 flex items-center gap-2">
           <Settings className="text-[var(--color-brand-blue)]" />
           Configurar Tipo de Actividad
         </h2>
@@ -83,8 +83,8 @@ export default function PointsConfig() {
         </form>
       </div>
 
-      <div className="glass p-6 rounded-2xl border border-white/5">
-        <h2 className="text-xl font-bold text-white mb-6">Tipos de Actividades Registradas</h2>
+      <div className="glass p-4 sm:p-6 rounded-2xl border border-white/5">
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-6">Tipos de Actividades Registradas</h2>
         {isLoading ? <p className="text-gray-400">Cargando...</p> : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {pointTypes?.filter((pt: any) => pt.is_active).map((pt: any) => (
