@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../utils/api';
-import { UserPlus, Trash2, Image as ImageIcon, Edit2 } from 'lucide-react';
+import { UserPlus, Power, Image as ImageIcon, Edit2 } from 'lucide-react';
 
 export default function AgentsCRUD() {
   const queryClient = useQueryClient();
@@ -41,14 +41,13 @@ export default function AgentsCRUD() {
     }
   });
 
-  const deleteAgent = useMutation({
-    mutationFn: async (id: number) => {
-      await api.delete(`/agents/${id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['agents'] });
+  const handleToggleStatus = (agent: any) => {
+    if (confirm(`¿${agent.is_active ? 'Desactivar' : 'Activar'} a ${agent.name}?`)) {
+      const fd = new FormData();
+      fd.append('is_active', String(!agent.is_active));
+      updateAgent.mutate({ id: agent.id, fd });
     }
-  });
+  };
 
   const updateAgent = useMutation({
     mutationFn: async ({ id, fd }: { id: number, fd: FormData }) => {
@@ -170,7 +169,7 @@ export default function AgentsCRUD() {
       </div>
 
       <div className="glass p-4 sm:p-6 rounded-2xl border border-white/5">
-        <h2 className="text-lg sm:text-xl font-bold text-white mb-6">Lista de Agentes Activos</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-white mb-6">Lista de Agentes</h2>
         {isLoading ? <p>Cargando...</p> : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm sm:text-base">
@@ -179,13 +178,14 @@ export default function AgentsCRUD() {
                   <th className="p-3 font-medium">Foto</th>
                   <th className="p-3 font-medium">Nombre</th>
                   <th className="p-3 font-medium">Correo</th>
+                  <th className="p-3 font-medium">Estado</th>
                   <th className="p-3 font-medium">Fecha Alta</th>
                   <th className="p-3 font-medium">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {agents?.filter((a: any) => a.is_active).map((agent: any) => (
-                  <tr key={agent.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                {agents?.map((agent: any) => (
+                  <tr key={agent.id} className={`border-b border-white/5 transition-colors ${agent.is_active ? 'hover:bg-white/5' : 'opacity-60 grayscale hover:bg-white/5'}`}>
                     <td className="p-3">
                       {agent.photo_url ? (
                         <img src={`${api.defaults.baseURL}${agent.photo_url}`} alt="Avatar" className="w-10 h-10 rounded-full object-cover" />
@@ -195,14 +195,19 @@ export default function AgentsCRUD() {
                     </td>
                     <td className="p-3 text-white">{agent.name}</td>
                     <td className="p-3 text-gray-400">{agent.email}</td>
+                    <td className="p-3">
+                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${agent.is_active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                        {agent.is_active ? 'Activo' : 'Inactivo'}
+                      </span>
+                    </td>
                     <td className="p-3 text-gray-400">{new Date(agent.created_at).toLocaleDateString()}</td>
                     <td className="p-3">
                       <div className="flex gap-2">
                         <button onClick={() => handleEditClick(agent)} className="text-blue-400 hover:text-blue-300 p-2 rounded-lg hover:bg-blue-400/10 transition-colors">
                           <Edit2 size={18} />
                         </button>
-                        <button onClick={() => { if(confirm('¿Eliminar agente?')) deleteAgent.mutate(agent.id); }} className="text-red-400 hover:text-red-300 p-2 rounded-lg hover:bg-red-400/10 transition-colors">
-                          <Trash2 size={18} />
+                        <button onClick={() => handleToggleStatus(agent)} className={`p-2 rounded-lg transition-colors ${agent.is_active ? 'text-red-400 hover:bg-red-400/10' : 'text-green-400 hover:bg-green-400/10'}`} title={agent.is_active ? 'Desactivar' : 'Activar'}>
+                          <Power size={18} />
                         </button>
                       </div>
                     </td>

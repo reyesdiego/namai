@@ -73,6 +73,7 @@ def update_agent(
     password: str = Form(None),
     begin_date: str = Form(None),
     end_date: str = Form(None),
+    is_active: str = Form(None),
     photo: UploadFile = File(None),
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_admin_user)
@@ -104,6 +105,9 @@ def update_agent(
             user.end_date = None
         else:
             user.end_date = datetime.fromisoformat(end_date.replace("Z", "+00:00"))
+            
+    if is_active is not None:
+        user.is_active = is_active.lower() == 'true'
             
     if photo:
         file_location = f"uploads/{photo.filename}"
